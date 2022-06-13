@@ -1,0 +1,61 @@
+{% extends 'item/base.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div style="border:none" class="card">
+                <div class="card-header">
+                  Billing Details
+                </div>
+                <div style="border:none" class="card-body">
+                  <h5 class="card-title">Address</h5>
+                  <p class="card-text">{{add.first_name}}<br>{{add.address_line_1}},{{add.address_line_2}}<br>{{add.city}},{{add.state}}<br>{{add.pincode}}</p>
+                 
+                </div>
+              </div>
+              <div style="border:none" class="card">
+                
+                <div  class="card-body">
+                  <h5 class="card-title">Payement Type</h5>
+                  <p class="card-text">Razorpay</p>
+                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+              </div>
+        </div>
+        
+        <div class="col-lg-4"> 
+        
+            <div class="checkout__order">
+                <h5>Your order</h5>
+                <div class="checkout__order__product">
+                    <ul>
+                        <li>
+                            <span class="top__text">Product</span>
+                            <span class="top__text__right">Total</span>
+                        </li>{% for item in cart_items %}
+                        <li>{{ item.product.brand }}  {{ item.product.subcategory.name }} x {{item.quantity}}<span>₹ {{ item.sub_total }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="checkout__order__total">
+                    <ul>
+                        <li>Subtotal <span>₹ {{total}}</span></li>
+                        <li>Tax <span>₹ {{tax}}</span></li>
+                        <li>Total <span>₹ {{grand_total}}</span></li>
+                    </ul>
+                </div>
+                <div class="checkout__order__widget">
+                   
+                </div>
+                <a href="{% url 'payment' %}">   <button  class="site-btn">Proceed to Pay</button></a><br><br>
+             
+            </div>
+        </div>
+        </div> 
+        
+    </div>
+    
+    </div>
+    
+{% endblock %}
