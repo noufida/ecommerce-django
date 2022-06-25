@@ -1,5 +1,4 @@
 
-from itertools import product
 from django.db import models
 from categories.models import *
 from django.urls import reverse
@@ -37,8 +36,11 @@ class Item(models.Model):
     discount = models.DecimalField(max_digits=6,decimal_places=2,blank=True,null=True)
     stock = models.IntegerField()
     availability = models.BooleanField()
-    section = models.ForeignKey(Section, on_delete=models.CASCADE,blank=True,null=True)
+    section = models.ForeignKey(Section, on_delete=models.DO_NOTHING,blank=True,null=True)
     image = models.ImageField(upload_to='images',null=True,blank=True)
+    image2 = models.ImageField(upload_to='images',null=True,blank=True)
+    image3 = models.ImageField(upload_to='images',null=True,blank=True)
+    image4 = models.ImageField(upload_to='images',null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -76,4 +78,16 @@ class Wish(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     product = models.ForeignKey(Item, on_delete=models.CASCADE)
 
-    
+
+class Review(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    product = models.ForeignKey(Item, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='review',null=True,blank=True)
+    review = models.TextField(max_length=300)
+    rating = models.IntegerField(null=True,blank=True)
+    created_date = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.product.name
+

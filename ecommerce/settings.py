@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'item',
     'cart',
     'order',
+    'admins',
+   
 ]
 
 MIDDLEWARE = [
@@ -143,9 +145,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/static/'
-# STATICFILE_DIRS =[
-#     os.path.join( BASE_DIR / "static",)
-# ]
+STATICFILES_DIRS =[
+    os.path.join( BASE_DIR / "static")
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -163,7 +165,11 @@ EMAIL_USE_TLS = True
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-TWILIO_VERIFY_SERVICE_SID='VA3165895ae7cfd276382f7845f801bcc3'
-TWILIO_ACCOUNT_SID='ACfdb51952ab94ac359ca11ab7943b457c'
-TWILIO_AUTH_TOKEN='ae97d580dfff393cfab358f3d5fc59fb'
+TWILIO_VERIFY_SERVICE_SID='VA278e1008d06c87c247f1db8b6cf70aca'
+TWILIO_ACCOUNT_SID='ACd77f3eb090b12af5f4a0fa553297e68b'
+TWILIO_AUTH_TOKEN='6fb67792af74119214743f469f276df1'
 
+GOOGLE_RECAPTCHA_SECRET_KEY = '6Le4rZAgAAAAAE1DWWpkjV7STBva0TBKP5Ie8M0R'
+
+RAZORPAY_ID ='rzp_test_efcfepUZ9n5uwO'
+RAZORPAY_KEY = 'aFoMVtEn3GwEFSgsJ5PJ9Rbf'

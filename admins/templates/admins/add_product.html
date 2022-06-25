@@ -1,0 +1,61 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-panel">        
+    <div class="content-wrapper">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Subcategory</h4>
+                <!-- <p class="card-description">
+                Basic form layout
+                </p> -->
+                <form action="" enctype="multipart/form-data" class="forms-sample" method="POST" id="ItemCreateForm" data-subcategory-url="{% url 'ajax_load_subcategory' %}">
+                    {% csrf_token %}
+                   
+                   
+                        {{ form.as_p }}
+                   
+                    
+                    <button type="submit" class="btn btn-primary me-2">Submit</button> 
+              
+                </form>
+                {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                {% endif %}
+              
+                
+            </div>
+          
+            </div>
+        </div>
+    
+      </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#id_category").change(function () {
+    var url = $("#ItemCreateForm").attr("data-subcategory-url");  // get the url of the `load_cities` view
+    var categoryId = $(this).val();  // get the selected country ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      data: {
+        'category': categoryId       // add the country id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_cities` view function
+        $("#id_subcategory").html(data);  // replace the contents of the city input with the data that came from the server
+      }
+    });
+
+  });
+</script>
+{% endblock %}

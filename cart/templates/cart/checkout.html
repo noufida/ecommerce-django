@@ -130,9 +130,20 @@
                                 </div>
                             </div> 
                         </div>
+                        <div class="col-lg-4">
+                            <div class="discount__content">
+                                <h6>Discount codes</h6>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="coupon"  placeholder="Enter your coupon code">
+                                    <button type="submit" class="site-btn">Apply</button>
+                                </form>
+                            </div>
+                            <br><br>
        
   
-                        <div class="col-lg-4">  <form method="POST" action="{% url 'place_order' %}">
+                      
+                              <form method="POST" action="{% url 'place_order' %}">
                             {% csrf_token %}
                             <div class="container">
                                 <strong>Select an Address</strong><br><br> 
@@ -147,12 +158,17 @@
                                 <div class="form-check">
                                    <input class="form-check-input" type="radio" name="address" id="exampleRadios1" value="{{x.id}}" checked>
                                    <label class="form-check-label" for="exampleRadios1">
-                                   {{x.first_name}} {{x.last_name}}<a href="{% url 'delete_address' x.id %}"> <i style="margin-left:200px;color: rgb(184, 8, 8);" class="fa fa-trash-o"></i></a>
+                                   {{x.first_name}} {{x.last_name}} <a href="{% url 'delete_address' x.id %}"> <i style="margin-inline-end: 2px; color: rgb(184, 8, 8);" class="fa fa-trash-o"></i></a>
                                    <p>{{x.address_line_1}},{{x.address_line_2}}, <br>{{x.city}},{{x.state}},<br> {{x.pincode}} </p>
+                                  
                                    
                                    </label>
                             </div> {% endfor %}
+                         
+                            
                             <div class="checkout__order">
+                                
+
                                 <h5>Your order</h5>
                                 <div class="checkout__order__product">
                                     <ul>
@@ -166,12 +182,19 @@
                                 </div>
                                 <div class="checkout__order__total">
                                     <ul>
-                                        <li>Subtotal <span>₹ {{total}}</span></li>
-                                        <li>Tax <span>₹ {{tax}}</span></li>
-                                        <li>Total <span>₹ {{grand_total}}</span></li>
-                                    </ul>{{carti}}
+                                        <li style="font-weight: lighter;" >Tax <span>₹ {{tax}}</span></li>
+                                        <li>Subtotal <span>₹ {{grand_total_without}}</span></li>
+                                        
+                                        {% if discount_available %}
+                                        <li>Discount <span>₹ {{discount_available}}</span></li>
+                                        
+                                        <li>Total <span>₹ {{grand_total}}</span></li>{% else %}
+                                        <li>Total <span>₹ {{grand_total_without}}</span></li>
+                                        {% endif %}
+
+                                    </ul>
                                 </div>
-                                <div class="checkout__order__widget">
+                                <!-- <div class="checkout__order__widget">
                                     <label for="o-acc">
                                         Create an acount?
                                         <input type="checkbox" id="o-acc">
@@ -189,7 +212,7 @@
                                         <input type="checkbox" id="paypal">
                                         <span class="checkmark"></span>
                                     </label>
-                                </div>
+                                </div> -->
                                 <button type="submit" class="site-btn">Place oder</button>
                             </div>
                         </div> </form>

@@ -16,12 +16,13 @@
               </div>
               <div style="border:none" class="card">
                 
-                <div  class="card-body">
+                <!-- <div  class="card-body">
                   <h5 class="card-title">Payement Type</h5>
                   <p class="card-text">Razorpay</p>
-                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                </div>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                 </div> --> 
               </div>
+              
         </div>
         
         <div class="col-lg-4"> 
@@ -40,17 +41,19 @@
                 </div>
                 <div class="checkout__order__total">
                     <ul>
-                        <li>Subtotal <span>₹ {{total}}</span></li>
-                        <li>Tax <span>₹ {{tax}}</span></li>
-                        <li>Total <span>₹ {{grand_total}}</span></li>
+                        <li>Subtotal <span>₹ {{grand_total_without}}</span></li>
+                                           
+                        
+                        <li>Total to Pay<span>₹ {{grand_total}}</span></li>
                     </ul>
                 </div>
                 <div class="checkout__order__widget">
                    
                 </div>
                 <a href="{% url 'payment' %}">   <button  class="site-btn">Proceed to Pay</button></a><br><br>
-             
+                <a href="{% url 'cod' %}">   <button  class="site-btn">Pay on Delivery</button></a><br><br>
             </div>
+           
         </div>
         </div> 
         

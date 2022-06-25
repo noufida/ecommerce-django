@@ -1,0 +1,121 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+  
+          <div class="row">           
+   
+           
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                    <div>
+                  <h4 class="card-title">Orders</h4>
+                  
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped mt-5">
+                      <thead >
+                        <tr>
+                          <th>
+                           Sl.no.
+                          </th>
+                          <th>
+                            Order number
+                           </th>
+                           <th>
+                            Order products
+                           </th>
+                           <!-- <th>
+                           Quantity
+                           </th> -->
+                          <th>
+                           Address
+                          </th> 
+                          <th>
+                            Order total
+                           </th>    
+                           <th>
+                           ip
+                           </th>  
+                           <th>
+                            Ordered On
+                            </th> 
+                           <th>
+                           Status
+                           </th>  
+                                   
+                          <th>
+                           Update Status
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                  
+                        {% for x in order %}
+                        <tr>
+                          <td class="py-1">
+                            {{ forloop.counter }}
+                     
+                          </td>
+                          <td>
+                           {{ x.order_number }}
+                          </td>
+                           
+                          <td> {% for y in order_product %}
+                            {% if y.order.pk == x.pk %} *
+                            {{ y.product }} (id={{y.id}}) X {{ y.quantity }} <br>{% endif %} 
+                            {% endfor %}
+                           </td>
+                           <!-- <td>   {% for y in order_product %}
+                            {% if y.order.pk == x.pk %}
+                            {{ y.quantity }}   {% endif %} 
+                            {% endfor %}
+                           </td> -->
+                         
+                          <td>
+                          
+                            {{x.address.address_line_1 | capfirst }}, <br> {{ x.address.address_line_2 | capfirst}},
+                            {{x.address.city | capfirst}},<br> {{x.address.state | capfirst}},<br> {{x.address.pincode}}
+                        
+                          </td>
+                          <td>
+                            {{ x.order_total }} 
+                          </td> 
+                           <td>
+                            {{ x.ip }} 
+                          </td>
+                          <td>
+                            {{ x.created_at }} 
+                          </td>
+                          <td>
+                            {{ x.status }} 
+                          </td>
+                         
+                           <td>
+
+                            <a href= "{% url 'edit_order' x.id %}"><i style="color:green" class="mdi mdi-upload"></i> </a>
+                                                                                                                               
+                           
+                           </td>
+                        </tr>
+                       {% endfor %}
+                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+       
+{% endblock %}

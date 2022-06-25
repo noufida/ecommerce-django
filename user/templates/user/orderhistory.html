@@ -1,0 +1,406 @@
+{% extends 'item/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row mt-5">
+      {% if messages %} 
+                <div class="col-lg-12">
+
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                       
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                       
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                </div> {% endif %}
+      
+      
+      {% for x in orderproduct %}
+        <div class="col-lg-12 ">
+            <div class="card card-margin p-4">
+               
+                    <h6 class="card-title">{{x.order.status}}                    
+               
+                <p>{{x.order.created_at.date}}</p><br><br>
+                <div class="card-body pt-0">{{x.var}}
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-date-primary">
+                                <img src="{{x.product.image.url}}">
+                            </div>
+                            <div class="widget-49-meeting-info pl-3">
+                                <!-- <span class="widget-49-pro-title">PRO-08235 DeskOpe. Website</span>
+                                <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span> -->
+                                
+                                    <p style="line-height: 3px;font-weight: bold;">{{x.product.brand}}</p>
+                                    <p style="line-height: 3px;" >{{x.product.description}}</p>
+                                    <p style="line-height: 3px;font-weight: 500;" >Rs. {{x.product.price}}</p>
+                                    <p style="line-height: 3px;font-weight: 500;" >Quantity : {{x.quantity}}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- <ol class="widget-49-meeting-points">
+                            <li class="widget-49-meeting-item"><span>Expand module is removed</span></li>
+                            <li class="widget-49-meeting-item"><span>Data migration is in scope</span></li>
+                            <li class="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li>
+                        </ol> -->
+                        <!-- <div class="widget-49-meeting-action">
+                            <a href="#" class="btn btn-sm btn-flash-border-primary">View All</a>
+                        </div> -->
+                    </div>
+                </div><p  >Order number :  {{x.order.order_number}}</p>{% if x.order.status == 'Confirmed' %}
+                <p style="font-weight: 600;color: rgb(110, 10, 10);" >Updates will be sent to +91 {{request.user.phone_number}}</p>
+                
+          {% endif %}
+          {% if x.order.status == 'Delivered' %}
+          <div class="alert alert-secondary">
+            <a href="{% url 'review' x.id %}" style="color:#394856" class="alert-link">+ Add a Review</a>                 
+           
+          </div>
+          <div class="alert alert-secondary">
+            <a href="{% url 'pdf' x.order.id %}" style="color:#394856" class="alert-link">Download Invoice</a>                 
+           
+          </div>
+         
+          {% endif %}
+         </div>
+        
+        </div>
+  
+        {% endfor %}
+    </div>
+    </div>
+    {% if not order %}
+    <div class="d-flex justify-content-center"><img src="{% static 'image/empty.png' %}" alt="no order history available">
+
+    </div>
+   {% endif %}
+    <style>
+ 
+
+
+
+
+
+
+
+body{
+    background: #ffff;
+    margin-top:20px;
+}
+
+.card-margin {
+    margin-bottom: 1.875rem;
+}
+
+.card {
+    border: 0;
+    box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #a39d9d34;
+    background-clip: border-box;
+    border: 1px solid #e6e4e9;
+    border-radius: 8px;
+}
+
+.card .card-header.no-border {
+    border: 0;
+}
+.card .card-header {
+    background: none;
+    padding: 0 0.9375rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+}
+.card-header:first-child {
+    border-radius: calc(8px - 1px) calc(8px - 1px) 0 0;
+}
+
+.widget-49 .widget-49-title-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #edf1fc;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-primary .widget-49-date-day {
+  color: #4e73e5;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-primary .widget-49-date-month {
+  color: #4e73e5;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fcfcfd;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-secondary .widget-49-date-day {
+  color: #dde1e9;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-secondary .widget-49-date-month {
+  color: #dde1e9;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #e8faf8;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-success .widget-49-date-day {
+  color: #17d1bd;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-success .widget-49-date-month {
+  color: #17d1bd;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ebf7ff;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-info .widget-49-date-day {
+  color: #36afff;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-info .widget-49-date-month {
+  color: #36afff;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-warning {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: floralwhite;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-warning .widget-49-date-day {
+  color: #FFC868;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-warning .widget-49-date-month {
+  color: #FFC868;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #feeeef;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-danger .widget-49-date-day {
+  color: #F95062;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-danger .widget-49-date-month {
+  color: #F95062;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-light {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fefeff;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-light .widget-49-date-day {
+  color: #f7f9fa;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-light .widget-49-date-month {
+  color: #f7f9fa;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-dark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ebedee;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-dark .widget-49-date-day {
+  color: #394856;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-dark .widget-49-date-month {
+  color: #394856;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f0fafb;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-base .widget-49-date-day {
+  color: #68CBD7;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-date-base .widget-49-date-month {
+  color: #68CBD7;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-meeting-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-meeting-info .widget-49-pro-title {
+  color: #3c4142;
+  font-size: 14px;
+}
+
+.widget-49 .widget-49-title-wrapper .widget-49-meeting-info .widget-49-meeting-time {
+  color: #B1BAC5;
+  font-size: 13px;
+}
+
+.widget-49 .widget-49-meeting-points {
+  font-weight: 400;
+  font-size: 13px;
+  margin-top: .5rem;
+}
+
+.widget-49 .widget-49-meeting-points .widget-49-meeting-item {
+  display: list-item;
+  color: #727686;
+}
+
+.widget-49 .widget-49-meeting-points .widget-49-meeting-item span {
+  margin-left: .5rem;
+}
+
+.widget-49 .widget-49-meeting-action {
+  text-align: right;
+}
+
+.widget-49 .widget-49-meeting-action a {
+  text-transform: uppercase;
+}
+    </style>
+    
+
+{% endblock %}

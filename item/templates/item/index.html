@@ -12,7 +12,7 @@
                     <div class="categories__text">
                         <h1>Women’s fashion</h1>
                         <p>When it comes to women, shopping is more than just a therapy. We believe that it is a joyous activity where you get to choose a whole new lifestyle.</p>
-                        <a href="#">Shop now</a>
+                        <a href="{% url 'women' %}">Shop now</a>
                     </div>
                 </div>
             </div>
@@ -22,50 +22,11 @@
                 <div class="categories__text">
                     <h1>Men’s fashion</h1>
                     <p>The finest of material, superior design and unbeatable style go into the making of our men’s shopping collection. </p>
-                    <a href="#">Shop now</a>
+                    <a href="{% url 'men' %}">Shop now</a>
                 </div>
             </div>
         </div>
-            <!-- <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-2.jpg">
-                            <div class="categories__text">
-                                <h4>Men’s fashion</h4>
-                                <p>358 items</p>
-                                <a href="#">Shop now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-3.jpg">
-                            <div class="categories__text">
-                                <h4>Kid’s fashion</h4>
-                                <p>273 items</p>
-                                <a href="#">Shop now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-4.jpg">
-                            <div class="categories__text">
-                                <h4>Cosmetics</h4>
-                                <p>159 items</p>
-                                <a href="#">Shop now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-5.jpg">
-                            <div class="categories__text">
-                                <h4>Accessories</h4>
-                                <p>792 items</p>
-                                <a href="#">Shop now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+        
         </div>
     </div>
 </section>
@@ -82,7 +43,7 @@
                     <h4>New Products</h4>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8">
+            <!-- <div class="col-lg-8 col-md-8">
                 <ul class="filter__controls">
                     <li class="active" data-filter="*">All</li>
                     <li data-filter=".women">Women’s</li>
@@ -91,7 +52,7 @@
                     <li data-filter=".accessories">Accessories</li>
                     <li data-filter=".cosmetic">Cosmetics</li>
                 </ul>
-            </div>
+            </div> -->
         </div>
         <div class="row property__gallery">
             {% for p in product %}            
@@ -109,13 +70,13 @@
                     </div>
                     <div class="product__item__text">
                         <h6><a href="{{p.get_url}}">{{ p.brand }}</a></h6>
-                        <div class="rating">
+                        <!-- <div class="rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i> 
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                        </div>
+                        </div> -->
                         <div class="product__price">₹{{p.price}}</div>
                     </div>
                 </div>
@@ -165,14 +126,14 @@
                             <img style="width : 90px;height:90 px;" src="{{ x.image.url }}" alt="">
                         </div>
                         <div class="trend__item__text">
-                            <h6>{{ x.brand }}</h6>
-                            <div class="rating">
+                            <h6><a style="color:black" href="{{x.get_url}}">{{ x.brand }}</a></h6>
+                            <!-- <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
-                            </div>
+                            </div> -->
                             <div class="product__price">₹{{ x.price }}</div>
                         </div>
                     </div>{% endfor %}
@@ -221,7 +182,7 @@
                             <p>Sec</p>
                         </div>
                     </div>
-                    <a href="#">Shop now</a>
+                    <a href="{% url 'shop' %}">Shop now</a>
                 </div>
             </div>
         </div>

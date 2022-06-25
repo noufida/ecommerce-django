@@ -11,14 +11,28 @@
                         <a href="./index.html"><i class="fa fa-home"></i> Home</a>
                         <span>Shopping cart</span>
                     </div>
-                </div>
+                    
+                </div> {% if messages %} 
+                <div class="col-lg-12">
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                       
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                       
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                </div> {% endif %}
             </div>
         </div>
     </div>
     <!-- Breadcrumb End -->
 
     <!-- Shop Cart Section Begin -->
-   
+ 
     <section class="shop-cart spad">
         <div class="container">
             {% if not cart_items %}
@@ -65,13 +79,13 @@
                                             {% endif %}</p></div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">{{cart_item.product.price}}</td>
+                                    <td class="cart__price">₹ {{cart_item.product.price}}</td>
                                     <td class="cart__quantity">
                                             <div>
                                                 <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
                                                     {% csrf_token %}
                                                     {% for item in cart_item.variations.all %}
-                                                    <input type="hidden" name="{{ item.variation_category }}" value="{{ item.variation_value }}">
+                                                    <input type="hidden" name="{{ item.variation_category }}" value="{{ item.variation_value }}" >
                                                     {% endfor %}
                                                     <button class="btn btn-light" type="submit" >+</button>
                                                 </form>
@@ -81,7 +95,7 @@
                                         </div>
                                        
                                     </td>
-                                    <td class="cart__total">$ {{cart_item.sub_total}}</td>
+                                    <td class="cart__total">₹ {{cart_item.sub_total}}</td>
                                     <td class="cart__close"><a style="color:rgb(48, 47, 47);" href="{% url 'remove_cart_item' cart_item.product.id  cart_item.id %}" onclick="return confirm('Are You Sure?')" class="icon_close"></a></td>
                                 </tr> {% endfor %}
                                 </tr>
@@ -95,30 +109,43 @@
                     <div class="cart__btn">
                         <a href="{% url 'shop' %}">Continue Shopping</a>
                     </div>
+                    
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <!-- <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn update__btn">
                         <a href="#"><span class="icon_loading"></span> Update cart</a>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="discount__content">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">Apply</button>
-                        </form>
+                        <!-- <h6>Discount codes</h6> -->
+                        <div class="cart__total__procced">
+                            <h6>Discount codes</h6>
+                            <ul>
+                                {% for c in coupon %}
+                              <li style="font-weight: lighter;" ><span style="color:rgb(202, 21, 21);font-weight: 600;" >{{ c.coupon_code }} </span>for orders above Rs.{{ c.active_from }}</li>
+                             {% if grand_total >= c.active_from %}
+                             <p>(eligible on your order)</p>
+                            
+                             {% endif %}
+                                {% endfor %}
+                            </ul>
+                           
+                           
+                      
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 offset-lg-2">
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ {{total}}</span></li>
-                            <li>Tax <span>$ {{tax}}</span></li>
-                            <li>Total <span>$ {{grand_total}}</span></li>
+                            <li>Subtotal <span>₹ {{total}}</span></li>
+                            <li>Tax <span>₹ {{tax}}</span></li>                           
+                            <li>Total  <span>₹ {{ grand_total }}</span></li>
+                          
                         </ul>
                        
                         <a href="{% url 'checkout' %}" class=" primary-btn" >Proceed to checkout</a>

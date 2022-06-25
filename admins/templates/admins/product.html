@@ -1,0 +1,120 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+    
+          <div class="row">           
+   
+           
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">All Products</h4>
+                  <a href= "{% url 'add_product' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            Sl no.
+                          </th>
+                          <th>
+                           Title
+                          </th>
+                          <th>
+                            Category
+                          </th>
+                          <th>
+                            Subcategory
+                          </th>
+                          <th>
+                            Gender
+                          </th>
+                          <th>
+                            Brand
+                          </th>
+                          <th>
+                            Price
+                          </th>
+                          <th>
+                            Stock
+                          </th>
+                          <th>
+                            Availability
+                          </th>
+                          <th>
+                            Image
+                          </th>
+                          <th>
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        {% for x in product %}
+                        <tr>
+                          <td class="py-1">
+                            {{ forloop.counter }}
+                          </td>
+                          <td>
+                            {{ x.name }}
+                          </td>
+                          <td>
+                            {{ x.category.title }}
+                          
+                          </td>
+                          <td>
+                            {{ x.subcategory.name }}
+                          </td>
+                          <td>
+                            {{ x.gender }}
+                           </td>
+                          <td>
+                           {{ x.brand }}
+                          </td>
+                          <td>
+                            {{ x.price }}
+                           </td>
+                           <td>
+                            {{ x.stock }}
+                           </td>
+                         
+                           <td>
+                            {% if x.availability %}
+                            <i style="color:green" class="mdi mdi-check-circle"></i>
+                            {% else %}
+                            <i style="color:red" class="mdi mdi-window-close"></i>
+                            {% endif %}
+                           </td>
+                           <td>
+                            <img src="{{ x.image.url }}">
+                           </td>
+                           <td>
+
+                            <a href= "{% url 'edit_product' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
+                            <a href= "{% url 'delete_product' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                           
+                           </td>
+                        </tr>
+                       {% endfor %}
+                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+       
+{% endblock %}

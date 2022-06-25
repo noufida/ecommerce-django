@@ -29,21 +29,35 @@
                                 <img src="{{single_product.image.url}}" alt="">
                             </a>
                             <a class="pt" href="#product-2">
-                                <img src="{{single_product.image.url}}" alt="">
+                                {% if single_product.image2 %}
+                                <img src="{{single_product.image2.url}}" alt="">
+                                {% endif %}
                             </a>
+                            
                             <a class="pt" href="#product-3">
-                                <img src="{{single_product.image.url}}" alt="">
+                                {% if single_product.image3 %}
+                                <img src="{{single_product.image3.url}}" alt="">
+                                {% endif %}
                             </a>
+                            
                             <a class="pt" href="#product-4">
-                                <img src="{{single_product.image.url}}" alt="">
+                                {% if single_product.image4 %}
+                                <img src="{{single_product.image4.url}}" alt="">
+                                {% endif %}
                             </a>
                         </div>
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
                                 <img data-hash="product-1" class="product__big__img" src="{{single_product.image.url}}" alt="">
-                                <img data-hash="product-2" class="product__big__img" src="{{single_product.image.url}}" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="{{single_product.image.url}}" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="{{single_product.image.url}}" alt="">
+                                {% if single_product.image2 %}
+                                <img data-hash="product-2" class="product__big__img" src="{{single_product.image2.url}}" alt="">
+                                {% endif %}
+                                {% if single_product.image3 %}
+                                <img data-hash="product-3" class="product__big__img" src="{{single_product.image3.url}}" alt="">
+                                {% endif %}
+                                {% if single_product.image4 %}
+                                <img data-hash="product-4" class="product__big__img" src="{{single_product.image4.url}}" alt="">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -54,18 +68,24 @@
                         {% csrf_token %}
                     <div class="product__details__text">
                         <h3>{{single_product.brand}}<span>{{single_product.description}}</span></h3>
-                        <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
+                      
+                        <div class="rating">{% if rating >= 1 %}
+                            <i class="fa fa-star"></i> {% endif %}
+                            {% if rating >= 2 %}
+                            <i class="fa fa-star"></i>{% endif %}
+                            {% if rating >= 3 %}
+                            <i class="fa fa-star"></i>{% endif %}
+                            {% if rating >= 4 %}
+                            <i class="fa fa-star"></i>{% endif %}
+                            {% if rating >= 5 %}
+                            <i class="fa fa-star"></i>{% endif %}
+                            {% if rating %}
+                            <span>( {{rating}}/5 )</span>{% endif %}
                         </div>
                         <div class="product__details__price"> ₹ {{single_product.price}} </div>
                         <!-- <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
                         magni lores eos qui ratione voluptatem sequi nesciunt.</p> -->
-                        <div class="product__details__button">
+                        <div class="product__details__button"> <form action="">
                             {% if single_product.stock <= 0 %}
                             <h6 style="margin:12px; color: #ca1515;font-weight:600" >Out of Stock</h6>
                            
@@ -92,23 +112,16 @@
                                         </label>
                                         {% endif %}
                                 </li>
-                                <li>{% if single_product.variation_set.colors %}
+                                <li> {% if single_product.variation_set.colors %}
                                     <span>Available color:</span>
                                     <div class="color__checkbox" >
                                         {% for i in single_product.variation_set.colors %}
-                                        <label for="{{i.variation_value}}">                                            
-                                            <input type="radio" value="{{i.variation_value | lower }}" name="color" id="{{i.variation_value}}" ><br>{{i.variation_value | capfirst }}
+                                        <label for="{{i.variation_value}}">                                         
+                                            <input required  type="radio" value="{{i.variation_value | lower }}" name="color" id="{{i.variation_value}}" ><br>{{i.variation_value | capfirst }}
                                             <span class="checkmark"></span>
                                         </label>
                                         {% endfor %}
-                                        <!-- <label for="black">
-                                            <input type="radio" value="black" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" value="grey" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
-                                        </label> -->
+                                      
                                     </div>{% endif %}
                                 </li>
                                 <li>{% if single_product.variation_set.sizes %}
@@ -116,23 +129,12 @@
                                     <div class="size__btn">
                                         {% for i in single_product.variation_set.sizes %}   
                                         <label for="{{i.variation_value}}" >
-                                            <input type="radio" value="{{i.variation_value | lower}}" name="size" id="{{i.variation_value}}">
+                                            <input required type="radio" value="{{i.variation_value | lower}}" name="size" id="{{i.variation_value}}">
                                             {{i.variation_value | capfirst}}
                                         </label>{% endfor %}
-                                        <!-- <label for="s-btn">
-                                            <input type="radio" value="small" name="size" id="s-btn">
-                                            s
-                                        </label>
-                                        <label for="m-btn">
-                                            <input type="radio" value="mediium" name="size" id="m-btn">
-                                            m
-                                        </label>
-                                        <label for="l-btn">
-                                            <input type="radio" value="large" name="size" id="l-btn">
-                                            l
-                                        </label> -->
-                                    </div>{% endif %}
-                                </li>
+                                       
+                                    </div>{% endif %}  
+                                </li> </form>
                                 <li>
                                     <span>Promotions:</span>
                                     <p>Free shipping</p>
@@ -145,56 +147,50 @@
                 <div class="col-lg-12">
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs" role="tablist">
+                           
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">View all reviews ({{a}}) </a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <h6>Description</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                quis, sem.</p>
-                            </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <h6>Specification</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                quis, sem.</p>
-                            </div>
+                            
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>Reviews ( 2 )</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                quis, sem.</p>
+                               
+                               
+                                   <div class="row">
+                                    <div style="float:left" class="col-lg-12">
+                                        {% if review %}
+                                        {% for x in review %}
+                                        
+                                        <h6>{{x.review}}</h6>
+                                        {% if x.image %}
+                                        <img style="width:4vw;height: 5vw;" src="{{x.image.url}}" >
+                                        <a href="{{ x.image.url }}" class="image-popup"><span class="arrow_expand"></span></a>
+                                        {% endif %} <br><br>
+                                        
+                                        <div style="color:gold ;" class="rating">
+                                            {% if x.rating >= 1 %}
+                                            <i  class="fa fa-star"></i>{% endif %}
+                                            {% if x.rating >= 2 %}
+                                            <i class="fa fa-star"></i>{% endif %}
+                                            {% if x.rating >= 3 %}
+                                            <i class="fa fa-star"></i>{% endif %}
+                                            {% if x.rating >= 4 %}
+                                            <i class="fa fa-star"></i>{% endif %}
+                                            {% if x.rating >= 5 %}
+                                            <i class="fa fa-star"></i>{% endif %}
+                                            {% if x.rating %}
+                                            <span style="color:black">( {{ x.rating }}/5)</span> {% endif %}
+                                        </div>
+                                        <p>{{x.user.first_name | capfirst}} {{x.user.last_name | capfirst}} | {{x.created_date.date}}</p><hr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                   </div>
+               
+                             
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -209,92 +205,20 @@
                 <div class="col-lg-3 col-md-4 col-sm-6"> 
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{p.image.url}}">
-                            <div class="label new">New</div>
+                           
                             <ul class="product__hover">
-                                <li><a href="{{ p.get_url }}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="{{ p.image.url }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="{% url 'wish' p.id %}"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="{{ p.get_url }}"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">{{p.brand}}</a></h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ {{p.price}}</div>
+                            <h6><a href="{{ p.get_url }}">{{p.brand}}</a></h6>
+                        
+                            <div class="product__price">₹ {{p.price}}</div>
                         </div>
                     </div>
-                <!-- <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/related/rp-2.jpg">
-                            <ul class="product__hover">
-                                <li><a href="img/product/related/rp-2.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Flowy striped skirt</a></h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 49.0</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/related/rp-3.jpg">
-                            <div class="label stockout">out of stock</div>
-                            <ul class="product__hover">
-                                <li><a href="img/product/related/rp-3.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Cotton T-Shirt</a></h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/related/rp-4.jpg">
-                            <ul class="product__hover">
-                                <li><a href="img/product/related/rp-4.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Slim striped pocket shirt</a></h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product__price">$ 59.0</div>
-                        </div>
-                    </div>
-                </div> -->
+              
             </div>{% endfor %}
         </div>
     </section>

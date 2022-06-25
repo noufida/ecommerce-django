@@ -1,0 +1,62 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-panel">        
+    <div class="content-wrapper">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Subcategory</h4>
+                <!-- <p class="card-description">
+                Basic form layout
+                </p> -->
+                <form action="" enctype="multipart/form-data" class="forms-sample" method="POST">
+                    {% csrf_token %}
+                   
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Category</label> {{form.category}}
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername1" placeholder="category" name="category"> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Title</label> {{form.name}}
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername1" placeholder="title", name="name"> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Slug</label> {{form.slug}}
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername1" placeholder="slug", name="slug"> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Gender</label> {{form.gender}}
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername1" placeholder="gender", name="gender"> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Image</label> 
+                        {{form.image}}
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername1" placeholder="image", name="image"> -->
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary me-2">Submit</button> 
+              
+                </form>
+                {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                {% endif %}
+              
+                
+            </div>
+          
+            </div>
+        </div>
+    
+      </div>
+    </div>
+</div>
+{% endblock %}

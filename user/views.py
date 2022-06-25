@@ -1,7 +1,8 @@
-from cmath import log
+
 from django.shortcuts import render,redirect
+
 from .models import Account,Address
-from .forms import RegistrationForm, VerifyForm, EditUserForm
+from .forms import RegistrationForm, VerifyForm, EditUserForm, ReviewForm
 from django.contrib import auth,messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -19,9 +20,11 @@ from .verify import send,check
 
 from cart.models import Cart,CartItem
 from cart.views import _cart_id
-from order.models import Payment
-#dynamic url redirecting
-# import   requests
+from order.models import OrderProduct,Order
+from item.models import Item, Review
+from categories.models import Category,SubCategory
+
+
 
 # Create your views here.
 
@@ -35,11 +38,16 @@ def user_register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             username = email.split("@")[0]
+
+            
+             
             if Account.objects.filter(phone_number=phone_number).exists():
                 messages.error(request,'Phone number already exists')
+            
+            
             # elif Account.objects.filter(phone_number=phone_number).exists():
             #     messages.error(request,'Phone number already exists')
-            else:
+            else:                
                 user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
                 user.phone_number = phone_number
                 user.save()
@@ -105,13 +113,29 @@ def verify_code(request):
 #     return render(request, 'user/register.html',context)
 
 def user_login(request):
+
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
 
+        try:
+            account = Account.objects.get(email=email)
+            if not account.is_active:          
+                phone_number = account.phone_number
+                send(phone_number)
+                messages.info(request, 'Account already exists with this email id, Verify the account by entering otp sent to your registered mobile number.')
+                return redirect('verify') 
+        except:
+            pass
         user = auth.authenticate(email=email, password=password)
-
-        if user is not None:
+        
+        if user is not None :
+         
+            # if user.is_superadmin:
+            #     auth.login(request,user)
+            #     return redirect('admin_tab')
+           
+                
             try:
                 cart = Cart.objects.get(cart_id=_cart_id(request))
                 is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
@@ -152,7 +176,11 @@ def user_login(request):
                                 item.save()
             except:
                 pass
-            auth.login(request, user)
+            if not user.is_superadmin:
+                auth.login(request, user)
+            else:
+                messages.error(request,'Invalid login Credentials!!')
+                return redirect('login')     
             # "if 'ckeckout' in request.session :
             #     return redirect('checkout')
             # else:
@@ -175,9 +203,9 @@ def user_login(request):
             # except:
             #     return redirect('/')
 
-            
 
         else:
+            print("hdsfguesugesugfhdsuig")
             messages.error(request,'Invalid login Credentials!!')
             return redirect('login')
     return render(request, 'user/login.html')
@@ -188,7 +216,7 @@ def home(request):
 @login_required(login_url='login')
 def user_logout(request):
     auth.logout(request)
-    messages.success(request,'You were logged out')
+    # messages.success(request,'You were logged out')
     return redirect('index')
 
 def activate(request, uidb64, token):
@@ -271,6 +299,10 @@ def reset_password(request):
 
 @ login_required(login_url='login')
 def profile(request):
+    women = SubCategory.objects.filter(gender__startswith = 'W')
+    men = SubCategory.objects.filter(gender__startswith = 'M')    
+    category = Category.objects.all()
+
     user = Account.objects.get(id=request.user.id)
     address = Address.objects.filter(user=user, )[0:1]
     # orders = Payment.objects.filter(user=request.user,paid=True)
@@ -278,6 +310,10 @@ def profile(request):
         'user' :user,
         'address' : address,
         # 'orders' : orders,
+
+        'men' : men,
+        'women' : women,
+        'category' :category,
     }
     return render(request, 'user/profile.html',context)
 
@@ -306,3 +342,106 @@ def edit_profile(request,id):
         'form' : form,
     }
     return render(request,'user/edit_profile.html',context)
+
+@login_required(login_url='login')
+def order_history(request):
+    women = SubCategory.objects.filter(gender__startswith = 'W')
+    men = SubCategory.objects.filter(gender__startswith = 'M')    
+    category = Category.objects.all()
+
+    orderproduct = OrderProduct.objects.filter(user=request.user).order_by('-id')
+    order = Order.objects.filter(user=request.user)
+  
+    context = {
+        'orderproduct' : orderproduct,
+        'order' : order,
+
+        'men' :men,
+        'women' : women,
+        'category' : category,
+       
+    }
+    return render(request,'user/orderhistory.html',context)
+
+def review(request, id):
+    obj = OrderProduct.objects.get(id=id)
+    product_id = obj.product_id
+    product = Item.objects.get(id=product_id)
+    form = ReviewForm(initial={'user':request.user, 'product':product})
+   
+    if request.method == 'POST':
+            image = request.FILES['image']
+            review = request.POST['review']
+            if 'star' in request.POST:
+                rating = request.POST['star']
+            else:
+                rating=None
+            
+            data = Review()
+            data.user = request.user
+            data.product = product
+            data.image= image
+            data.review = review
+            data.rating = rating
+            data.save()
+            messages.success(request, 'Review updated successfully')
+            return redirect('order_history')
+       
+    context = {
+        'product' : product,
+        'form' : form,
+    }
+    return render(request, 'item/review.html',context)
+
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        if new_password == confirm_password:
+            user = Account.objects.get(email=request.user.email)
+            success = user.check_password(current_password)
+            if success:
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Password Reset was Successfull')
+                return redirect('login')
+            else:
+                messages.success(request, 'Inavalid Password')
+                return redirect('change_password')
+        else:
+            messages.success(request, 'Passwords Does Not Match')
+            return redirect('change_password')
+    return render(request, 'user/change_password.html')
+
+
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    response = HttpResponse(content_type='application/pdf')
+    pdf_status = pisa.CreatePDF(html, dest=response)
+
+    if pdf_status.err:
+        return HttpResponse('Some errors were encountered <pre>' + html + '</pre>')
+
+    return response
+
+
+
+def ResultList(request,id):
+    template_name = "user/invoice.html"
+    order = Order.objects.get(id=id)
+    order_products = OrderProduct.objects.filter(order=order)
+    return render_to_pdf(
+        template_name,{
+            'order':order,
+            'order_products':order_products,
+        }
+       
+        )

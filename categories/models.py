@@ -31,4 +31,8 @@ class SubCategory(models.Model):
     def get_url(self):
         return reverse('shop_by_subcategory', args =[self.category.slug, self.slug])
 
-    
+    def get_url_w(self):
+        return reverse('shop_by_subcategory_women', args =[self.category.slug, self.slug])
+
+    def get_url_m(self):
+        return reverse('shop_by_subcategory_men', args =[self.category.slug, self.slug])

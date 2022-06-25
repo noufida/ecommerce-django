@@ -1,0 +1,157 @@
+{% extends 'item/base.html' %}
+{% block content %}
+{% load static %}
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <span>Women</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+  
+   
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                 <!-- Shop Section Begin -->
+   
+                <div class="col-lg-3 col-md-3">
+                    <div class="shop__sidebar">
+                        <div class="sidebar__categories">
+                            <div class="section-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <div class="categories__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            <a data-toggle="collapse" data-target="#collapseOne">View in Categories</a>
+                                        </div> 
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                               
+                                                <!-- <li><a href="{% url 'shop' %}">All Products</a></li> -->
+                                                <ul> 
+
+                                                    {% if not categories %}
+                                                    {% for x in s_links %} {% if x in men %}
+                                                    <li><a href="{{ x.get_url_m }}">{{ x.name }}</a></li> {% endif %}
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                    
+                                                    {% for x in s_links %}
+                                                    {% if x.category == categories %}
+                                                     {% if x in men %}
+                                                    <li><a href="{{ x.get_url_m }}">{{ x.name }}</a></li>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% endfor %}
+
+                                                   
+                                                    <!-- <li><a href="#">Jackets</a></li>
+                                                    <li><a href="#">Dresses</a></li>
+                                                    <li><a href="#">Shirts</a></li>
+                                                    <li><a href="#">T-shirts</a></li>
+                                                    <li><a href="#">Jeans</a></li> -->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    <form action="" method="POST">
+
+                        {% csrf_token %}
+                        <div class="section-title">
+                            <h4 style="font-size:20px">Sort by Price</h4>
+                        </div>
+                   <select class="form-control" name="sort" id="">
+                       <option   value="">sort by</option>
+                       <option   value="inc">Low to High</option>
+                       <option value="dec">High to Low</option>
+                       
+                   </select>
+                   <button style=" width:100px;height:35px;margin-top: 12px;background-color: #ffff;color: #ca1515;border :solid 1px #ca1515;border-radius: 12px;" type="submit">Apply </button>
+                </form>
+                   
+                        
+                   
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                                        {% if 'search' in request.path %}
+                                            <h6><span style="font-weight: 700;color:#ca1515">{{products_count}} </span> Results  Found</h6>
+                                        {% endif %}<hr><br><br>
+                        {% if products %}
+                    <div class="row">{% for pro in products %}
+                       
+                        <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{ pro.image.url }}">
+                                    <!-- <div class="label new">New</div> -->
+                                    <ul class="product__hover">
+                                        <li><a href="{{ pro.image.url }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="{% url 'wish' pro.id %} "><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="{{ pro.get_url }}">{{ pro.brand }}</a></h6>
+                                    <!-- <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div> -->
+                                    <div class="product__price">₹{{ pro.price }}</div>
+                                </div>
+                            </div>
+                        </div>{%  endfor %}                      
+                       {% else %}
+                       <img src="{% static 'image/no.webp' %}">
+                       <!-- <h5 style="align-items: center;">Nothing to Show</h5> -->
+                       {% endif %}
+                    </div>
+                    {% if products.has_other_pages %}
+                     <div class="pagination">
+                         {% if products.has_previous %}
+                        <a style="margin-left: 270px;font-size: 20px;	max-width: 100%;color:black; font-weight: 500;"  href="?page={{products.previous_page_number}}">&laquo;</a>
+                        {% else %}
+                        <a style="margin-left: 270px;font-size: 20px;	max-width: 100%;color:rgb(163, 159, 159); font-weight: 500;cursor: default;"  href="#">&laquo;</a>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                        <a  style="margin-left: 30px;font-size: 20px;	max-width: 100%;color:black; font-weight: 500;"  href="#">{{i}}</a>
+                        {% else %}
+                        <a  style="margin-left: 30px;font-size: 20px;	max-width: 100%;color:black; font-weight: 500;"  href="?page={{i}}">{{i}}</a>
+                        {% endif %}
+                        {% endfor %}
+                        {% if products.has_next %}
+                        <a  style="margin-left: 30px;font-size: 20px;	max-width: 100%;color:black; font-weight: 500;"  href="?page={{products.next_page_number}}">&raquo;</a>
+                        {% else %}
+                        <a style="margin-left: 30px;font-size: 20px;	max-width: 100%;color:rgb(163, 159, 159); font-weight: 500; cursor: default;"  href="#">&raquo;</a>
+                        {% endif %}
+                    </div>
+                      {% endif %}
+                </div>
+              
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+  
+
+ {% endblock %}

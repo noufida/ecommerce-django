@@ -8,8 +8,8 @@
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
-
+    <title>Savebox.ae</title>
+    <link rel="icon" type="image/png" href="{% static 'image/logo.png' %}"/>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
@@ -69,16 +69,16 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        <a href="{% url 'index' %}"><img style="width:168px;height:40px" src="{% static 'image/logo.png' %}" alt=""></a>
                     </div>
-                </div>
+                </div>  
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
                                 <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="#">Women’s</a>
+                            <li><a href="{% url 'women' %}">Women’s</a>
                                 <ul class="dropdown">{% for cat in category %}
-                                    <li ><a style="color:rgb(202, 21, 21); font-weight: 700;" href="{{ cat.get_url }}?brand=libas">{{ cat.title }}</a></li> 
+                                    <li ><p style="color:rgb(202, 21, 21); font-weight: 700;margin-left: 10px;margin-top: 5px;" >{{ cat.title }}</p></li> 
                                     {% for c in women %}  {% if cat == c.category  %}   
                                                                                  
                                     <li ><a  href="{{ c.get_url }}">{{ c.name }}</a></li>
@@ -88,9 +88,9 @@
                                     <li><a href="./blog-details.html">Blog Details</a></li> -->
                                 </ul>
                             </li>
-                            <li><a href="#">Men’s</a>
+                            <li><a href="{% url 'men' %}">Men’s</a>
                                 <ul class="dropdown">{% for cat in category %}
-                                    <li ><a style="color:rgb(202, 21, 21); font-weight: 700;" href="{{ cat.get_url }}">{{ cat.title }}</a></li> 
+                                    <li ><p style="color:rgb(202, 21, 21); font-weight: 700;margin-left: 10px;margin-top: 5px;" >{{ cat.title }}</p></li> 
                                     {% for c in men %}  {% if cat == c.category  %}   
                                                                                  
                                     <li ><a  href="{{ c.get_url }}">{{ c.name }}</a></li>
@@ -101,16 +101,16 @@
                                 </ul>
                             </li>
                             <li><a href="{% url 'shop' %}">Shop</a></li>
-                            <li><a href="#">Pages</a>
+                            <!-- <li><a href="#">pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="./product-details.html">Product Details</a></li>
-                                    <li><a href="./shop-cart.html">Shop Cart</a></li>
-                                    <li><a href="./checkout.html">Checkout</a></li>
+                                    <li><a href="./product-details.html">Profile</a></li>
+                                    <li><a href="./shop-cart.html">Orders</a></li>
+                                    <li><a href="./checkout.html">Logout</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="#">Dashboard</a></li> -->
+                            <li><a href="{% url 'contact' %}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -118,10 +118,10 @@
                     <div class="header__right">{% if not user.is_authenticated %}
                         <div class="header__right__auth">
                             <a href="{% url 'login' %}">Login</a>
-                            <a href="#">Register</a>
+                            <a href="{% url 'register' %}">Register</a>
                         </div>{% else %}
-                        <img style="height:5%;width:5%;margin-right: 10px;opacity:75% ;" src="{% static 'image/user-solid(1).svg' %}">
-                        <a style="margin-right: 50px;color: rgb(48, 46, 46);" href="{% url 'profile' %}">{{user.first_name | capfirst }}</a>
+                        <img style="height:4%;width:4%;margin-right: 10px ;" src="{% static 'image/user-solid(1).svg' %}">
+                        <a style="margin-right: 50px;color: rgb(48, 46, 46); font-weight: bold;" href="{% url 'profile' %}"> {{user.first_name }}</a>
                         {% endif %}
 
 
@@ -151,28 +151,28 @@
 <section class="services spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="services__item">
                     <i class="fa fa-car"></i>
                     <h6>Free Shipping</h6>
-                    <p>For all oder over $99</p>
+                    <p>For all order over ₹ 300</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="services__item">
                     <i class="fa fa-money"></i>
                     <h6>Money Back Guarantee</h6>
                     <p>If good have Problems</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="services__item">
                     <i class="fa fa-support"></i>
                     <h6>Online Support 24/7</h6>
                     <p>Dedicated support</p>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            </div> -->
+            <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="services__item">
                     <i class="fa fa-headphones"></i>
                     <h6>Payment Secure</h6>
@@ -192,7 +192,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b1.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b2.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -208,7 +208,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b3.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b4.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -224,7 +224,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b5.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -232,7 +232,7 @@
                 <div class="instagram__item set-bg" data-setbg="{% static 'image/b6.jpg' %}">
                     <div class="instagram__text">
                         <i class="fa fa-instagram"></i>
-                        <a href="#">@ ashion_shop</a>
+                        <a href="#">@ save_box</a>
                     </div>
                 </div>
             </div>
@@ -250,8 +250,7 @@
                     <div class="footer__logo">
                         <a href="./index.html"><img src="img/logo.png" alt=""></a>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    cilisis.</p>
+                    <p>SaveBox is the ultimate destination for fashion and lifestyle, being host to a wide array of merchandise of clothing. </p>
                     <div class="footer__payment">
                         <a href="#"><img src="img/payment/payment-1.png" alt=""></a>
                         <a href="#"><img src="img/payment/payment-2.png" alt=""></a>
@@ -265,10 +264,10 @@
                 <div class="footer__widget">
                     <h6>Quick links</h6>
                     <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Blogs</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="{% url 'shop' %}">Store</a></li>
+                        
+                        <li><a href="{% url 'contact' %} ">Contact</a></li>
+                        <li><a href="{% url 'contact' %} ">About</a></li>
                     </ul>
                 </div>
             </div>
@@ -276,20 +275,20 @@
                 <div class="footer__widget">
                     <h6>Account</h6>
                     <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Orders Tracking</a></li>
-                        <li><a href="#">Checkout</a></li>
-                        <li><a href="#">Wishlist</a></li>
+                        <li><a href="{% url 'profile' %}">My Account</a></li>
+                        <li><a href="{% url 'order_history' %}">Orders </a></li>
+                        <li><a href="{% url 'checkout' %}">Checkout</a></li>
+                        <li><a href="{% url 'wish_render' %}">Wishlist</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-md-8 col-sm-8">
                 <div class="footer__newslatter">
-                    <h6>NEWSLETTER</h6>
+                    <!-- <h6>NEWSLETTER</h6>
                     <form action="#">
                         <input type="text" placeholder="Email">
                         <button type="submit" class="site-btn">Subscribe</button>
-                    </form>
+                    </form> -->
                     <div class="footer__social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>

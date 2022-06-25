@@ -1,0 +1,86 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+  
+          <div class="row">           
+   
+           
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                    <div>
+                  <h4 class="card-title">Sub-categories</h4>
+                  <a href= "{% url 'add_subcategory' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped mt-5">
+                      <thead >
+                        <tr>
+                          <th>
+                           Sl.no.
+                          </th>
+                          <th>
+                            Image
+                           </th>
+                          <th>
+                           Title
+                          </th> 
+                          <th>
+                            Category
+                           </th>     
+                                   
+                          <th>
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                  
+                        {% for x in subcategory %}
+                        <tr>
+                          <td class="py-1">
+                            {{ forloop.counter }}
+                     
+                          </td>
+                          <td>
+                            <img style="width:50px;height:50px" src="{{ x.image.url }}"> 
+                          </td>
+                          <td>
+                            {{ x.name | capfirst}} 
+                          </td>
+                          <td>
+                            {{ x.category.title}} 
+                          </td>
+                         
+                           <td>
+
+                            <a href= "{% url 'edit_subcategory' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
+                            <a href= "{% url 'delete_subcategory' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                           
+                           </td>
+                        </tr>
+                       {% endfor %}
+                    
+                      </tbody>
+                    </table>{% if messages %}
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+       
+{% endblock %}

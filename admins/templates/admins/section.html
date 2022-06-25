@@ -1,0 +1,70 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+  
+          <div class="row">           
+   
+           
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                    <div>
+                  <h4 class="card-title">All Sections</h4>
+                  <a href= "{% url 'add_section' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped mt-5">
+                      <thead >
+                        <tr>
+                          <th>
+                           Sl.no.
+                          </th>
+                          <th>
+                           Section name
+                          </th> 
+                          <th>
+                           Actions
+                           </th> 
+                        </tr>
+                      </thead>
+                      <tbody>
+                  
+                        {% for x in section %}
+                        <tr>
+                          <td class="py-1">
+                            {{ forloop.counter }}
+                            
+                          </td>
+                          <td>
+                            {{ x.name }} 
+                          </td>
+                       
+                        
+                           <td>
+
+                            <a href= "{% url 'edit_section' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
+                            <a href= "{% url 'delete_section' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                           
+                           </td>
+                        </tr>
+                       {% endfor %}
+                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+       
+{% endblock %}

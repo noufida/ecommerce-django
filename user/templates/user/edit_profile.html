@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V18</title>
+	<title>Edit Profile</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -41,28 +41,28 @@
             <form action="" method="POST"  class="login100-form validate-form">
               {% csrf_token %}
               <span class="login100-form-title p-b-43">
-                LOGIN
+                EDIT PROFILE
               </span>
             
                              
                      
            
-              <label>First_name</label>
+              <label>First Name</label>
               <div class="form-wrapper">
                   {{form.first_name}}
-              </div>
+              </div> <br>
 
-              <label>Last_name</label>
+              <label>Last Name</label>
               <div class="form-wrapper">
                   {{form.last_name}}
-              </div>
+              </div> <br>
 
               <label>Username</label>
               <div class="form-wrapper">
                   {{form.username}}
               </div>
           
-          
+          <br><br>
     
               <div class="container-login100-form-btn">
                 <button type="submit"  style="background-color:rgb(202, 21, 21) ;" class="login100-form-btn">
@@ -70,22 +70,7 @@
                 </button>
              
             </form> 
-              <!-- <div class="text-center p-t-46 p-b-20">
-                <span class="txt2">
-                  or sign up using
-                </span>
-              </div>
-    
-              <div class="login100-form-social flex-c-m">
-                <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-                  <i class="fa fa-facebook-f" aria-hidden="true"></i>
-                </a>
-    
-                <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-                  <i class="fa fa-twitter" aria-hidden="true"></i>
-                </a>
-              </div> -->
-          
+             
            
             <div class="login100-more" style="background-image: url('images/bg-01.jpg');">
             </div>

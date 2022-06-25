@@ -1,0 +1,200 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            
+
+                <div class="col-sm-12">
+                  <div class="statistics-details d-flex align-items-center justify-content-between">
+                 
+                    <div>
+                      <p style="font-weight: bold;" class="statistics-title">Customers</p>
+                      <h3 style="color:rgb(228, 20, 20)" class="rate-percentage">{{customer_count}}</h3>
+                      <!-- <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p> -->
+                    </div>
+                    <div>
+                      <p style="font-weight: bold;" class="statistics-title">Total Orders </p>
+                      <h3 style="color:rgb(17, 180, 25)" class="rate-percentage">{{order_count}}</h3>
+                      <!-- <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p> -->
+                    </div>
+                    <div>
+                        <p style="font-weight: bold;" class="statistics-title">Total Transactions </p>
+                        <h3 style="color:rgb(50, 42, 165)" class="rate-percentage">₹ {{total_amount}}</h3>
+                        <!-- <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p> -->
+                    </div>
+                    <div>
+                        <p style="font-weight: bold;" class="statistics-title">Total Products</p>
+                        <h3 style="color:rgb(196, 2, 108)" class="rate-percentage">{{item_count}}</h3>
+                        <!-- <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p> -->
+                    </div>
+                  
+                  </div>
+                </div>
+              </div> 
+          <div class="row">           
+            
+            <div class="col-sm-6"><div id="container" style="width: 100%;">
+              <canvas id="product_chart" data-url="{% url 'product_chart' %}"></canvas>
+            </div>
+            
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+            <script>
+            
+              $(function () {
+            
+                var $productChart = $("#product_chart");
+                $.ajax({
+                  url: $productChart.data("url"),
+                  success: function (data) {
+            
+                    var ctx = $productChart[0].getContext("2d");
+            
+                    new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                        labels: data.labels,
+                        datasets: [{
+                          label: 'Sold out',
+                          backgroundColor: 'grey',
+                          data: data.data
+                        }]          
+                      },
+                      options: {
+                        responsive: true,
+                        legend: {
+                          position: 'top',
+                        },
+                        title: {
+                          display: true,
+                          text: 'Product Sales Bar Chart'
+                        }
+                      }
+                    });
+            
+                  }
+                });
+            
+              });
+            
+            </script></div>
+
+            <div class="col-sm-6"><div id="container" style="width: 100%;">
+              <canvas id="brand_chart" data-url="{% url 'brand_chart' %}"></canvas>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+            <script>
+
+              $(function () {
+
+                var $brandChart = $("#brand_chart");
+                $.ajax({
+                  url: $brandChart.data("url"),
+                  success: function (data) {
+
+                    var ctx = $brandChart[0].getContext("2d");
+
+                    new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                        labels: data.labels,
+                        datasets: [{
+                          label: 'Sold out',
+                          backgroundColor: 'grey',
+                          data: data.data
+                        }]          
+                      },
+                      options: {
+                        responsive: true,
+                        legend: {
+                          position: 'top',
+                        },
+                        title: {
+                          display: true,
+                          text: ' Sales Bar Chart'
+                        }
+                      }
+                    });
+
+                  }
+                });
+
+              });
+
+            </script></div>
+           
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Transactions</h4>
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            User
+                          </th>
+                          <th>
+                           Payment Id
+                          </th>
+                          <th>
+                            Amount
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th>
+                            Date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        {% for x in amounts %}
+                        <tr>
+                          <td class="py-1">
+                            {{ x.user.email }}
+                          </td>
+                          <td>
+                            {{ x.payment_id }}
+                          </td>
+                          <td>
+                            {{ x.amount_paid }}
+                          
+                          </td>
+                          <td>
+                            {% if x.paid %}
+                            Completed
+                            {% else %}
+                            Failed
+                            {% endif %}
+                          </td>
+                          <td>
+                           {{ x.created_at }}
+                          </td>
+                        </tr>
+                       {% endfor %}
+                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+       
+{% endblock %}

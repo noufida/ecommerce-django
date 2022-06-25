@@ -1,6 +1,18 @@
 from dataclasses import field
 from django import forms
 from .models import Account,Address
+from item.models import Review
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = [ 'image', 'review',]
+
+    def __init__(self, *args, **kwargs):
+        super(ReviewForm, self).__init__(*args, **kwargs)
+        self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        self.fields['review'].widget.attrs.update({'class': 'form-control'})
 
 class RegistrationForm(forms.ModelForm):
     # phone = forms.CharField(max_length=20, required=True, help_text='Phone_number')
@@ -23,7 +35,7 @@ class RegistrationForm(forms.ModelForm):
         self.fields['first_name'].widget.attrs['placeholder'] = 'Enter Firstname'
 
         for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'input-100'
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
@@ -32,11 +44,24 @@ class RegistrationForm(forms.ModelForm):
 
         if password != confirm_password:
             raise forms.ValidationError(
-                "passwords does not match!!"
+                "Passwords does not match!!"
             )
 
+        if len(password)<8:
+            raise forms.ValidationError(
+                "Password should contain minimum 8 characters!"
+            )   
+
+        phone_number = cleaned_data.get('phone_number')
+        if len(phone_number) != 10:
+            raise forms.ValidationError(
+                "Enter a valid Phone number"
+            )               
+
 class VerifyForm(forms.Form):
-    code = forms.CharField(max_length=8, required=True, help_text='Enter code')
+    code = forms.CharField(max_length=8, required=True, help_text='')
+
+    
 
 class AddressForm(forms.ModelForm):
     class Meta:
@@ -48,3 +73,9 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ['first_name', 'last_name', 'username',]
+
+    def __init__(self, *args, **kwargs):
+        super(EditUserForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
