@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from ctypes import cast
 from pathlib import Path
 import os
 from decouple import config
@@ -25,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY= config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,26 +87,18 @@ AUTH_USER_MODEL = 'user.Account'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+#database settings
 
 DATABASES = {
 
     'default': {
-
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'ecommerce',
-
-        'USER': 'postgres',
-
-        'PASSWORD': '123',
-
-        'HOST': '127.0.0.1',
-
-        'PORT': '5432',
-
+        'NAME': config('DB_NAME', cast=str),
+        'USER': config('DB_USER', cast=str),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
     }
-
 }
 
 
@@ -143,29 +136,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = '/static/'
-# STATICFILES_DIRS =[
-#     os.path.join( BASE_DIR / "static")
-# ]
-
-
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl':'max-age=86400',
-}
-AWS_S3_FILE_OVERWRITE = True
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_DIRS=[
-    'static',
+STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
+STATICFILES_DIRS =[
+    os.path.join( BASE_DIR / "static")
 ]
-STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl':'max-age=86400',
+# }
+# AWS_S3_FILE_OVERWRITE = True
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_LOCATION = 'static'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_DIRS=[
+#     'static',
+# ]
+# STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -187,7 +180,7 @@ TWILIO_VERIFY_SERVICE_SID=config('TWILIO_VERIFY_SERVICE_SID')
 TWILIO_ACCOUNT_SID=config('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN=config('TWILIO_AUTH_TOKEN')
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6Le4rZAgAAAAAE1DWWpkjV7STBva0TBKP5Ie8M0R'
+GOOGLE_RECAPTCHA_SECRET_KEY = config('GOOGLE_RECAPTCHA_SECRET_KEY')
 
 RAZORPAY_ID=config('RAZORPAY_ID')
 RAZORPAY_KEY=config('RAZORPAY_KEY')
