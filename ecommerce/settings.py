@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&=bkqvx*%x91)sa=+x7i$vl&52vi+pg^eor@41y2&y0go&v)u)'
+SECRET_KEY= config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -143,11 +143,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
-STATICFILES_DIRS =[
-    os.path.join( BASE_DIR / "static")
+# STATIC_URL = '/static/'
+# STATIC_ROOT = '/static/'
+# STATICFILES_DIRS =[
+#     os.path.join( BASE_DIR / "static")
+# ]
+
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl':'max-age=86400',
+}
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_DIRS=[
+    'static',
 ]
+STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -156,20 +174,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #SMTP CONFIGURATION
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'noufidap@gmail.com'
-EMAIL_HOST_PASSWORD = 'sxdmxkzwgazizgor'
-EMAIL_USE_TLS = True
+EMAIL_HOST=config('EMAIL_HOST')
+EMAIL_PORT=config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER=config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS=config('EMAIL_USE_TLS',cast=bool)
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-TWILIO_VERIFY_SERVICE_SID='VA278e1008d06c87c247f1db8b6cf70aca'
-TWILIO_ACCOUNT_SID='ACd77f3eb090b12af5f4a0fa553297e68b'
-TWILIO_AUTH_TOKEN='6fb67792af74119214743f469f276df1'
+TWILIO_VERIFY_SERVICE_SID=config('TWILIO_VERIFY_SERVICE_SID')
+TWILIO_ACCOUNT_SID=config('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN=config('TWILIO_AUTH_TOKEN')
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6Le4rZAgAAAAAE1DWWpkjV7STBva0TBKP5Ie8M0R'
 
-RAZORPAY_ID ='rzp_test_efcfepUZ9n5uwO'
-RAZORPAY_KEY = 'aFoMVtEn3GwEFSgsJ5PJ9Rbf'
+RAZORPAY_ID=config('RAZORPAY_ID')
+RAZORPAY_KEY=config('RAZORPAY_KEY')
