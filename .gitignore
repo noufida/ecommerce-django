@@ -1,4 +1,5 @@
 .env
 media/
 __pycache__/
+.server_env
 asset/
