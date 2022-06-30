@@ -90,9 +90,9 @@
                             <h6 style="margin:12px; color: #ca1515;font-weight:600" >Out of Stock</h6>
                            
                             {% else %}
-                            <button type="submit" class="cart-btn"><span class= "icon_bag_alt"></span> Add to cart</button>
+                            <button type="submit" class="cart-btn"><i class="fa-solid fa-cart-shopping"></i> Add to cart</button>
                             <ul>
-                                <li><a href="{% url 'wish' single_product.id %}"><span class="icon_heart_alt"></span></a></li>
+                                <li><a style="color: #ca1515 ;border:solid #ca1515" href="{% url 'wish' single_product.id %}"><i class="fa-solid fa-heart"></i></a></li>
                                 <!-- <li><a href="#"><span class="icon_adjust-horiz"></span></a></li> -->
                             </ul>{% endif %}
                         </div>
@@ -165,7 +165,7 @@
                                         <h6>{{x.review}}</h6>
                                         {% if x.image %}
                                         <img style="width:4vw;height: 5vw;" src="{{x.image.url}}" >
-                                        <a href="{{ x.image.url }}" class="image-popup"><span class="arrow_expand"></span></a>
+                                        <a href="{{ x.image.url }}" class="image-popup"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
                                         {% endif %} <br><br>
                                         
                                         <div style="color:gold ;" class="rating">
@@ -207,9 +207,9 @@
                         <div class="product__item__pic set-bg" data-setbg="{{p.image.url}}">
                            
                             <ul class="product__hover">
-                                <li><a href="{{ p.image.url }}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="{% url 'wish' p.id %}"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="{{ p.get_url }}"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="{{ p.image.url }}" class="image-popup"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a></li>
+                                <li><a href="{% url 'wish' p.id %}"><i class="fa-solid fa-heart"></i></a></li>
+                                <li><a href="{{ p.get_url }}"><i class="fa-solid fa-cart-shopping"></i></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">

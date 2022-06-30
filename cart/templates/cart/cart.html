@@ -96,7 +96,7 @@
                                        
                                     </td>
                                     <td class="cart__total">₹ {{cart_item.sub_total}}</td>
-                                    <td class="cart__close"><a style="color:rgb(48, 47, 47);" href="{% url 'remove_cart_item' cart_item.product.id  cart_item.id %}" onclick="return confirm('Are You Sure?')" class="icon_close"></a></td>
+                                    <td class="cart__close"><a style="color:rgb(48, 47, 47);" href="{% url 'remove_cart_item' cart_item.product.id  cart_item.id %}" onclick="return confirm('Are You Sure?')" class="fa-solid fa-xmark"></a></td>
                                 </tr> {% endfor %}
                                 </tr>
                             </tbody>

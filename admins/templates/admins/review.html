@@ -64,8 +64,8 @@
                            <td>
 
                             
-                            <a href= "{% url 'delete_review' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
-                           
+                            <a href= "{% url 'delete_review' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;margin-inline:50px;"  class="fa-solid fa-trash"></i></a>                                                                                                    
+                          
                            </td>
                         </tr>
                        {% endfor %}

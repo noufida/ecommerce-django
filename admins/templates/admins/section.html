@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <div>
                   <h4 class="card-title">All Sections</h4>
-                  <a href= "{% url 'add_section' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <a style="text-decoration: none;" href= "{% url 'add_section' %}"><i class="fa-solid fa-circle-plus "></i><span> &nbsp&nbspAdd New  </a>
                   <!-- <p class="card-description">
                     Add class <code>.table-striped</code>
                   </p> -->
@@ -50,8 +50,8 @@
                         
                            <td>
 
-                            <a href= "{% url 'edit_section' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
-                            <a href= "{% url 'delete_section' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                            <a href= "{% url 'edit_section' x.id %}"><i style="color:green" class="fa-solid fa-pen-to-square"></i> </a>
+                            <a href= "{% url 'delete_section' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.name}} ?')"><i style="color:red;margin-inline:50px;"  class="fa-solid fa-trash"></i></a>                                                                                                     
                            
                            </td>
                         </tr>

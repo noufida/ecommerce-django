@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <div>
                   <h4 class="card-title">Sub-categories</h4>
-                  <a href= "{% url 'add_variation' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <a style="text-decoration: none;" href= "{% url 'add_variation' %}"><i class="fa-solid fa-circle-plus"></i> Add New </a>
                   <!-- <p class="card-description">
                     Add class <code>.table-striped</code>
                   </p> -->
@@ -62,12 +62,12 @@
                          
                            <td>
 
-                            <a href= "{% url 'edit_variation' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
-                            <a href= "{% url 'delete_variation' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                            <a href= "{% url 'edit_variation' x.id %}"><i style="color:green" class="fa-solid fa-pen-to-square"></i> </a>
+                            <a href= "{% url 'delete_variation' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="margin-inline:50px;color:red;" class="fa-solid fa-trash"></i></a>                                                                                                    
                            
                            </td>
                         </tr>
-                       {% endfor %}
+                       {% endfor %}                           
                     
                       </tbody>
                     </table>{% if messages %}

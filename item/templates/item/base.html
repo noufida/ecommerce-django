@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
 
-
+    <!-- font-awesome -->
+    <script src="https://kit.fontawesome.com/df00c4319e.js" crossorigin="anonymous"></script>
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -127,10 +128,10 @@
 
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="{% url 'wish_render' %}"><span class="icon_heart_alt"></span>
-                                <!-- <div class="tip">2</div> -->
+                            <li><a href="{% url 'wish_render' %}"><i class="fa-solid fa-heart"></i>
+                               
                             </a></li>
-                            <li><a href="{% url 'cart' %}"><span class="icon_bag_alt"></span>
+                            <li><a href="{% url 'cart' %}"> <i class="fa-solid fa-cart-shopping"></i>
                                 <div class="tip">{{cart_count}}</div>
                             </a></li>
                         </ul>

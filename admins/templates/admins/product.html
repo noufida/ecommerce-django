@@ -15,7 +15,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">All Products</h4>
-                  <a href= "{% url 'add_product' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <a style="text-decoration: none;" href= "{% url 'add_product' %}"> <i class="fa-solid fa-circle-plus "></i><span> &nbsp&nbspAdd New </a>
                   <!-- <p class="card-description">
                     Add class <code>.table-striped</code>
                   </p> -->
@@ -86,13 +86,13 @@
                            </td>
                            <td>
                             {{ x.stock }}
-                           </td>
-                         
+                           </td> 
+                           
                            <td>
                             {% if x.availability %}
-                            <i style="color:green" class="mdi mdi-check-circle"></i>
+                            <i style="color:green" class="fa-solid fa-check"></i>
                             {% else %}
-                            <i style="color:red" class="mdi mdi-window-close"></i>
+                            <i style="color:red" class="fa-solid fa-xmark"></i>
                             {% endif %}
                            </td>
                            <td>
@@ -100,8 +100,8 @@
                            </td>
                            <td>
 
-                            <a href= "{% url 'edit_product' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
-                            <a href= "{% url 'delete_product' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                            <a href= "{% url 'edit_product' x.id %}"><i style="color:green" class="fa-solid fa-pen-to-square"></i> </a>
+                            <a href= "{% url 'delete_product' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.name}} ?')"><i style="color:red;margin-inline:50px;"  class="fa-solid fa-trash"></i></a>                                                                                                      
                            
                            </td>
                         </tr>

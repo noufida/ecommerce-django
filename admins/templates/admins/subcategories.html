@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <div>
                   <h4 class="card-title">Sub-categories</h4>
-                  <a href= "{% url 'add_subcategory' %}"><i style="margin-left: auto;" class="mdi mdi-plus-circle"></i> </a>
+                  <a style="text-decoration: none;color:black;margin-left:90%" href= "{% url 'add_subcategory' %}"><i class="fa-solid fa-plus "></i><span> &nbsp&nbspAdd New</span> </a>
                   <!-- <p class="card-description">
                     Add class <code>.table-striped</code>
                   </p> -->
@@ -62,8 +62,8 @@
                          
                            <td>
 
-                            <a href= "{% url 'edit_subcategory' x.id %}"><i style="color:green" class="mdi mdi-pencil"></i> </a>
-                            <a href= "{% url 'delete_subcategory' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.title}} ?')"><i style="color:red;" class="mdi mdi-delete m-5"></i></a>                                                                                                    
+                            <a href= "{% url 'edit_subcategory' x.id %}"><i style="color:green" class="fa-solid fa-pen-to-square"></i> </a>
+                            <a href= "{% url 'delete_subcategory' x.id %}" onclick="return confirm('Are you sure to delete '+' {{x.name}} ?')"><i style="color:red;margin-inline:50px;"  class="fa-solid fa-trash"></i></a>                                                                                                    
                            
                            </td>
                         </tr>

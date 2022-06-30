@@ -62,9 +62,9 @@
                      <!-- <a href="{{p.get_url}}"> <img src={{p.image.url}}></a> -->
                         <div class="label new">New</div>
                         <ul class="product__hover">
-                            <li><a href="{{ p.image.url }}" class="image-popup"><span class="arrow_expand"></span></a></li>                            
-                            <li><a href="{% url 'wish' p.id %}"><span class="icon_heart_alt"></span></a></li>
-                            <li><a href="{{ p.get_url }}"><span class="icon_bag_alt"></span></a></li>
+                            <li><a href="{{ p.image.url }}" class="image-popup"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a></li>                            
+                            <li><a href="{% url 'wish' p.id %}"><i class="fa-solid fa-heart"></i></a></li>
+                            <li><a href="{{ p.get_url }}"><i class="fa-solid fa-cart-shopping"></i></a></li>
                            
                         </ul>          
                     </div>
