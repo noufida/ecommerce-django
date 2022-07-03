@@ -37,7 +37,7 @@
                                 <!-- <span class="widget-49-pro-title">PRO-08235 DeskOpe. Website</span>
                                 <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span> -->
                                 
-                                    <p style="line-height: 3px;font-weight: bold;">{{x.product.brand}}</p>
+                                    <a href="{{ x.product.get_url }}"> <p style="line-height: 3px;font-weight: bold;">{{x.product.brand}}</p></a>
                                     <p style="line-height: 3px;" >{{x.product.description}}</p>
                                     <p style="line-height: 3px;font-weight: 500;" >Rs. {{x.product.price}}</p>
                                     <p style="line-height: 3px;font-weight: 500;" >Quantity : {{x.quantity}}</p>
