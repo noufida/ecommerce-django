@@ -61,9 +61,9 @@ def brand_chart(request):
     labels = []
     data = []
 
-    queryset = Order.objects.values('created_at').annotate(count=Sum('order_total')).order_by('-id')[:7]
+    queryset = OrderProduct.objects.values('product__subcategory__name').annotate(count=Sum('quantity')).order_by('-id')[:7]
     for entry in queryset:
-        labels.append(entry['created_at'])
+        labels.append(entry['product__subcategory__name'])
         data.append(entry['count'])
 
     return JsonResponse (data= {
