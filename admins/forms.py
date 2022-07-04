@@ -33,7 +33,7 @@ class ItemCreateForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['category', 'subcategory', 'gender', 'name', 'slug', 'brand', 'description', 'price', 
-        'discount', 'stock', 'availability', 'section', 'image', ]
+        'discount', 'stock', 'availability', 'section', 'image', 'image2', 'image3', 'image4' ]
 
     def __init__(self, *args, **kwargs):
         super(ItemCreateForm, self).__init__(*args, **kwargs)
@@ -46,13 +46,16 @@ class ItemCreateForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['price'].widget.attrs.update({'class': 'form-control'})
         self.fields['discount'].widget.attrs.update({'class': 'form-control'})
-        self.fields['stock'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['availability'].widget.attrs.update({'class': 'form-control'})
+        self.fields['stock'].widget.attrs.update({'class': 'form-control'})       
         self.fields['section'].widget.attrs.update({'class': 'form-control'})
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        self.fields['image2'].widget.attrs.update({'class': 'form-control'})
+        self.fields['image3'].widget.attrs.update({'class': 'form-control'})
+        self.fields['image4'].widget.attrs.update({'class': 'form-control'})
+
+
 
         self.fields['subcategory'].queryset = SubCategory.objects.none()
-
 
         if 'category' in self.data:
             try:

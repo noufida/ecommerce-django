@@ -368,9 +368,10 @@ def review(request, id):
     product_id = obj.product_id
     product = Item.objects.get(id=product_id)
     form = ReviewForm(initial={'user':request.user, 'product':product})
-   
+    image = None
     if request.method == 'POST':
-            image = request.FILES['image']
+            if request.FILES:
+                image = request.FILES['image']
             review = request.POST['review']
             if 'star' in request.POST:
                 rating = request.POST['star']
@@ -380,7 +381,8 @@ def review(request, id):
             data = Review()
             data.user = request.user
             data.product = product
-            data.image= image
+            if image:
+                data.image= image
             data.review = review
             data.rating = rating
             data.save()
