@@ -30,7 +30,7 @@ def index(request):
     return render(request, 'item/index.html',context)
 
 def women(request,slug=None,sub_slug=None):
- 
+    
     categories = None
     subcategories = None
     products = None
