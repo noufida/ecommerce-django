@@ -1,5 +1,5 @@
 # ecommerce-django
-This is a sample application that demonstrates an E-commerce website using the Python Django. The application loads products from a PostgreSQL database and displays them. Users can select to display products in a single category. Users can register and login to website and, click on any product to get more information including pricing, reviews and rating. Users can select items and add them to their shopping cart,and complete their payment using Razor-pay or cod. They can view their order status, can download invoice and add review of product.
+This is a sample application that demonstrates an e-commerce website using the Python Django. The application loads products from a PostgreSQL database and displays them. Users can select to display products in a single category. Users can register and login to website and, click on any product to get more information including pricing, reviews and rating. Users can select items and add them to their shopping cart,and complete their payment using Razor-pay or cod. They can view their order status, can download invoice and add review of product.
 In admin side, admins can manage users,products,categories,discount coupons,orders etc...
 
 
